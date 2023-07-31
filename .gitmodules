@@ -1,0 +1,3 @@
+[submodule "espsoftwareserial"]
+	path = src/espsoftwareserial
+	url = git@github.com:CW-B-W/espsoftwareserial.git
