@@ -30,7 +30,7 @@ void loop()
             const int data_bytes = 2;
             int bytes_read = 0;
             while (bytes_read < data_bytes) {
-                bytes_read += swLin.read(buf, data_bytes - bytes_read);
+                bytes_read += swLin.read(buf + bytes_read, data_bytes - bytes_read);
             }
             swLin.endFrame();
             for (int i = 0; i < data_bytes; ++i) {
