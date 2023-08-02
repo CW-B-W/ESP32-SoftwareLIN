@@ -24,11 +24,13 @@ But if we use the same trick to implement LIN slave, the LIN slave cannot be fle
 Therefore, to make ESP32 able to be a LIN slave, this project emerges.
 
 ## This project
-Based on [espsoftwareserial](https://github.com/plerup/espsoftwareserial), which is the software emulation of UART with GPIO pins, we add `break field` detection for LIN bus.  
+Based on [espsoftwareserial](https://github.com/plerup/espsoftwareserial), which is the software emulation of UART with GPIO pins, we add `break field` detection and `auto baud` for LIN bus.  
 
 ***espsoftwareserial*** uses GPIO pins to emulate UART. At the rising edge and falling edge of the GPIO pins, it triggers interrupt, and the ISR records the timestamp and the rising / falling edge of this interrupt.  
 
-Making use of the timestamp and rising / falling edge information recorded by ***espsoftwareserial***, we can check whether the `break field` is received, no matter how many bits the `break field` contains.
+Making use of the timestamp and rising / falling edge information recorded by ***espsoftwareserial***, we can check whether the `break field` is received, no matter how many bits the `break field` contains.  
+
+Using the same idea, `auto baud` is also implemented in this project.
 
 # Quick start guide
 1. Use VS Code with extension PlatformIO to open the project folder
@@ -44,6 +46,7 @@ Only two functions need to be used: `sendBreak()` and `endFrame()`.
 `endFrame()` is to notify the `SoftwareLin` the frame has ended, and it resets the internal value of `SoftwareLin`
 ```C++
 SoftwareLin swLin(RX_PIN, TX_PIN);
+swLin.begin(baud);
 swLin.sendBreak();
 .
 . // Send data to the bus
@@ -52,14 +55,27 @@ swLin.endFrame();
 ```
 
 ## For LIN slave
-Only two functions need to be used: `checkBreak()` and `endFrame()`.  
-`checkBreak()` is used to check whether the break field has been detected  
+
+Only three functions need to be used: `checkBreak()`, `setAutoBaud()` and `endFrame()`.  
+`sendBreak()` is used to check whether the break field has been detected  
+`setAutoBaud()` is used to automatically detect and set baud rate  
 `endFrame()` is to notify the `SoftwareLin` the frame has ended, and it resets the internal value of `SoftwareLin`
 ```C++
 SoftwareLin swLin(RX_PIN, TX_PIN);
+#define LIN_BAUD_MAX (20000)
+swLin.begin(LIN_BAUD_MAX);
 if (swLin.checkBreak()) {
+    const uint32_t commonBaud[3] = {9600, 14400, 19200};
+    uint32_t autobaud = swLin.setAutoBaud(commonBaud, 3);
+    if (autobaud > 0) {
+        // baud rate is set to autobaud
+    }
+    else {
+        // autobaud detection failed
+    }
     .
     . // Receive from the bus
+    . // !!! Note that the SYNC byte was consumed by setAutoBaud()
     .
     swLin.endFrame();
 }

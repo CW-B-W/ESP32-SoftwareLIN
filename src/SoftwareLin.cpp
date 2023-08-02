@@ -75,6 +75,55 @@ bool IRAM_ATTR SoftwareLin::checkBreak()
     return breakDetected;
 }
 
+uint32_t IRAM_ATTR SoftwareLin::setAutoBaud(const uint32_t commonBaud[], int commonBaudSize)
+{
+    assert(true == m_inFrame);
+
+    uint32_t m_bitTicks_bak = m_bitTicks;
+    
+    m_bitTicks = (microsToTicks(1000000UL) + 1 / 2) / 1;
+    // This is to satisfy the assertion in detectBaud();
+    
+    uint32_t detectedBaud = detectBaud();
+    for (int i = 0; i < 3; ++i) {
+        // After detectBaud() finished, there should be totally
+        // 3 rising/falling edges of the SYNC byte left in the buffer.
+        // Popping the rest rising/falling edges of the SYNC bytes.
+
+        while (!m_isrBuffer->available()) {
+            ; // wait until can pop
+        }
+        uint32_t isrTick = m_isrBuffer->pop();
+        const bool level = (m_isrLastTick & 1) ^ m_invert;
+        m_isrLastTick = isrTick;
+    }
+    if (detectedBaud == 0) {
+        m_bitTicks = m_bitTicks_bak;
+        return 0;
+    }
+
+    int32_t diff_min = 0x7FFFFFFFUL;
+    uint32_t baud = 0;
+    for (int i = 0; i < commonBaudSize; ++i) {
+        int32_t diff = abs((int32_t)commonBaud[i] - (int32_t)detectedBaud);
+        if (diff < diff_min) {
+            diff_min = diff;
+            baud = commonBaud[i];
+        }
+    }
+
+    const uint32_t LIN_BAUD_MAX = 20000;
+    if (baud >= LIN_BAUD_MAX) {
+        m_bitTicks = m_bitTicks_bak;
+        return 0;
+    }
+
+    // Set baud rate to the detected baud rate
+    m_bitTicks = (microsToTicks(1000000UL) + baud / 2) / baud;
+
+    return baud;    
+}
+
 void SoftwareLin::endFrame()
 {
     m_inFrame = false;

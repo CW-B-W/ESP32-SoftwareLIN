@@ -3,12 +3,17 @@
 #define RX_PIN (4)
 #define TX_PIN (5)
 
+#define LIN_BAUD_MAX (20000)
+
 SoftwareLin swLin(RX_PIN, TX_PIN);
 
 void setup()
 {
     Serial.begin(115200);
-    swLin.begin(9600);
+    
+    // swLIN.setAutoBaud() can detect and set the correct baud automatically.
+    // Just set the initial baud rate to LIN_BAUD_MAX (20000)
+    swLin.begin(LIN_BAUD_MAX);
 }
 
 #define LIN_SLAVE
@@ -16,8 +21,12 @@ void loop()
 {
     while (1) {
         const int frame_data_bytes = 5;
-        uint8_t buf[3+frame_data_bytes]; // 3 bytes for SYNC, PID and CHECKSUM
+        uint8_t buf[2+frame_data_bytes]; // 2 bytes for PID and CHECKSUM. !!! The SYNC is consumed by swLin.setAutoBaud()
         if (swLin.checkBreak()) {
+            const uint32_t commonBaud[] = {110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200};
+            uint32_t autobaud = swLin.setAutoBaud(commonBaud, sizeof(commonBaud)/sizeof(commonBaud[0]));
+            Serial.printf("autobaud = %lu\n", autobaud);
+
             const int read_timeout = 100000; // 100ms timeout
             int start_time = micros();
 

@@ -30,6 +30,25 @@ public:
 
     void sendBreak(int breakBits = 13, int delimiterBits = 1);
     bool checkBreak();
+
+   /* 
+    * setAutoBaud() is used for automatically detect and set
+    * baud rate after the break field has been detected.
+    * When setAutoBaud() is called, it's assumed that the Rx
+    * pin is receiving a SYNC byte (0x55).
+    * setAutoBaud() will detect the baud rate with SYNC byte
+    * and set the baud rate to the closest one in commonBaud[].
+    * 
+    * \param commonBaud The array of common baud rates.
+    *   When baud rate is detected, setAutoBaud() will set the
+    *   baud rate to the closest one in commandBaud[]
+    * \param commonBaudSize The size of commonBaud[]
+    * 
+    * \return The baud rate set by setAutoBaud().
+    * Return 0 if setAutoBaud() failed, and the baud rate will
+    * not be changed.
+    */
+    uint32_t setAutoBaud(const uint32_t commonBaud[], int commonBaudSize);
     
     void endFrame();
 
