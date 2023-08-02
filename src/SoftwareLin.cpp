@@ -113,7 +113,7 @@ uint32_t IRAM_ATTR SoftwareLin::setAutoBaud(const uint32_t commonBaud[], int com
     }
 
     const uint32_t LIN_BAUD_MAX = 20000;
-    if (baud >= LIN_BAUD_MAX) {
+    if (baud > LIN_BAUD_MAX) {
         m_bitTicks = m_bitTicks_bak;
         return 0;
     }
