@@ -26,7 +26,7 @@ Therefore, to make ESP32 able to be a LIN slave, this project emerges.
 ## This project
 Based on [espsoftwareserial](https://github.com/plerup/espsoftwareserial), which is the software emulation of UART with GPIO pins, we add `break field` detection for LIN bus.  
 
-***espsoftwareserial*** uses GPIO pins to emulation UART. At the rising edge and falling edge of the GPIO pins, it triggers interrupt, and the ISR records the timestamp and the rising / falling edge of this interrupt.  
+***espsoftwareserial*** uses GPIO pins to emulate UART. At the rising edge and falling edge of the GPIO pins, it triggers interrupt, and the ISR records the timestamp and the rising / falling edge of this interrupt.  
 
 Making use of the timestamp and rising / falling edge information recorded by ***espsoftwareserial***, we can check whether the `break field` is received, no matter how many bits the `break field` contains.
 
@@ -53,7 +53,7 @@ swLin.endFrame();
 
 ## For LIN slave
 Only two functions need to be used: `checkBreak()` and `endFrame()`.  
-`sendBreak()` is used to check whether the break field has been detected  
+`checkBreak()` is used to check whether the break field has been detected  
 `endFrame()` is to notify the `SoftwareLin` the frame has ended, and it resets the internal value of `SoftwareLin`
 ```C++
 SoftwareLin swLin(RX_PIN, TX_PIN);
