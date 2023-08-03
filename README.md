@@ -32,6 +32,10 @@ Making use of the timestamp and rising / falling edge information recorded by **
 
 Using the same idea, `auto baud` is also implemented in this project.
 
+### Features
+* Send/Detect break field of LIN bus
+* Autobaud detection and set
+
 # Quick start guide
 1. Use VS Code with extension PlatformIO to open the project folder
 2. Build and upload the ESP32 firmware with PlatformIO
