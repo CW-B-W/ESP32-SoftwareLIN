@@ -3,6 +3,7 @@
 #define RX_PIN (4)
 #define TX_PIN (5)
 
+#define LIN_AUTOBAUD
 #define LIN_BAUD_MAX (20000)
 
 SoftwareLin swLin(RX_PIN, TX_PIN);
@@ -25,8 +26,6 @@ void loop()
 {
     while (1) {
         const int frame_data_bytes = 5;
-
-#define LIN_AUTOBAUD
 
 #ifdef LIN_AUTOBAUD
         uint8_t buf[2+frame_data_bytes]; // 2 bytes for PID and CHECKSUM. !!! The SYNC is consumed by swLin.setAutoBaud()
