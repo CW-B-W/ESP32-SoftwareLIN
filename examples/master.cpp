@@ -19,6 +19,7 @@ void loop()
         const uint8_t buf[3+frame_data_bytes] = {0x55, 0x02, 'h', 'e', 'l', 'l', 'o', 0xA7};
         // 3 bytes for SYNC, PID and CHECKSUM
         swLin.write((const uint8_t*)buf, sizeof(buf));
+        swLin.flush(); // to ensure every bytes are sent.
         swLin.endFrame();
         delay(10);
     }
