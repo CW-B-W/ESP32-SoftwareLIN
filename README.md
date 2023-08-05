@@ -1,4 +1,5 @@
 # ESP32-SoftwareLIN
+[Doxygen docs](https://cw-b-w.github.io/ESP32-SoftwareLIN/)
 # Introduction
 This project is to make ESP32 support LIN (Local Interconnect Network) bus serial.  
 ESP32 doesn't have a dedicated hardware for LIN bus communication, therefore we have to use software emulation with GPIO pins to emulate the LIN communication.
