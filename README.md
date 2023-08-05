@@ -9,7 +9,7 @@ But for UART, sending/receiving 13 consecutive zeros is considered error.
 Therefore, generally for LIN bus communication we will need dedicated hardware in MCU to support it.  
 Refer to [Texas Instruments - LIN Protocol and Physical Layer Requirements](https://www.ti.com/lit/an/slla383a/slla383a.pdf)
 
-![ESP-SoftwareLIN-Tx](https://github.com/CW-B-W/ESP32-SoftwareLIN/assets/76680670/19d90946-3f73-4156-8f06-243790baa16e)
+<img src="https://github.com/CW-B-W/ESP32-SoftwareLIN/assets/76680670/19d90946-3f73-4156-8f06-243790baa16e" style="width:75%;"/>  
 (The signal is analyzed with [EUA/ESP32_LogicAnalyzer](https://github.com/EUA/ESP32_LogicAnalyzer))
 
 ## Common implementations and their limitation
@@ -19,7 +19,8 @@ In this way, the receiver, whose baud rate is not halved, actually receives 18 d
 For example the implementation of [mestrode/Lin-Interface-Library](https://github.com/mestrode/Lin-Interface-Library/blob/76f9d4c31d0e90f9c053faf287fa81837a453ba9/src/Lin_Interface.cpp#L229)  
 
 This method should work fine for LIN master.  
-But if we use the same trick to implement LIN slave, the LIN slave cannot be flexible enough to receive all possible combinations of break field. For example, it cannot detect break field with 13 dominant bits and 1 recessive bit.  
+But if we use the same trick to implement LIN slave, the LIN slave cannot be flexible enough to receive all possible combinations of break field.  
+For example, it cannot detect break field with 13 dominant bits and 1 recessive bit.  
 
 Therefore, to make ESP32 able to be a LIN slave, this project emerges.
 

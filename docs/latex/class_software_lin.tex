@@ -1,0 +1,160 @@
+\doxysection{Software\+Lin Class Reference}
+\hypertarget{class_software_lin}{}\label{class_software_lin}\index{SoftwareLin@{SoftwareLin}}
+Inheritance diagram for Software\+Lin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_software_lin}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_software_lin_a5d03c78eddf7c2653ef8cde63eaf9a7e}{Software\+Lin}} (int8\+\_\+t rx\+Pin, int8\+\_\+t tx\+Pin)
+\begin{DoxyCompactList}\small\item\em Construct a new Software Lin object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_software_lin_a7152ba7053f2eff863edd956f681ccbe}{send\+Break}} (int break\+Bits=13, int delimiter\+Bits=1)
+\begin{DoxyCompactList}\small\item\em Send Break Field and Break Delimiter to the bus. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_software_lin_a9ae37435fc437fd9a3bf639441a3a042}{check\+Break}} ()
+\begin{DoxyCompactList}\small\item\em Check whether there is Break Field sent on the bus. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud}} (const uint32\+\_\+t common\+Baud\mbox{[}$\,$\mbox{]}, int common\+Baud\+Size)
+\begin{DoxyCompactList}\small\item\em \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} is used for automatically detect and set baud rate after the break field has been detected. When \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} is called, it\textquotesingle{}s assumed that the Rx pin is receiving a SYNC byte (0x55). \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} will detect the baud rate with SYNC byte and set the baud rate to the closest one in common\+Baud\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_software_lin_ae02bdc24f7e59218e38ff7f8f50a9b9c}{end\+Frame}} ()
+\begin{DoxyCompactList}\small\item\em Notify \doxylink{class_software_lin}{Software\+Lin} the LIN frame has ended. This is for \doxylink{class_software_lin}{Software\+Lin} to reset the internal state registers and prepare for next frame. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_software_lin_aae2e970343acd45bfc879e0b201784c2}{read}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Read bytes to buffer. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_software_lin_a2378ed8db5e1c601c99ff0d411502aaf}{write}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size) override
+\begin{DoxyCompactList}\small\item\em Write bytes to the bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_software_lin_ad2ac6554a377df667b5c07ccd2103ce3}\label{class_software_lin_ad2ac6554a377df667b5c07ccd2103ce3} 
+bool {\bfseries m\+\_\+in\+Frame}
+\begin{DoxyCompactList}\small\item\em Indicate whether \doxylink{class_software_lin}{Software\+Lin} is still processing a frame. Initially, m\+\_\+in\+Frame is false. After \doxylink{class_software_lin_a7152ba7053f2eff863edd956f681ccbe}{send\+Break()} is executed or detect\+Break() is true, m\+\_\+in\+Frame is set to true. Only when m\+\_\+in\+Frame is true, we can execute \doxylink{class_software_lin_aae2e970343acd45bfc879e0b201784c2}{read()}/write(), otherwise the assertion should failed. When the LIN frame has ended, \doxylink{class_software_lin_ae02bdc24f7e59218e38ff7f8f50a9b9c}{end\+Frame()} should be executed to reset m\+\_\+in\+Frame to false, so that the next LIN frame can be processed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_software_lin_a5d03c78eddf7c2653ef8cde63eaf9a7e}\label{class_software_lin_a5d03c78eddf7c2653ef8cde63eaf9a7e} 
+\index{SoftwareLin@{SoftwareLin}!SoftwareLin@{SoftwareLin}}
+\index{SoftwareLin@{SoftwareLin}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{SoftwareLin()}{SoftwareLin()}}
+{\footnotesize\ttfamily Software\+Lin\+::\+Software\+Lin (\begin{DoxyParamCaption}\item[{int8\+\_\+t}]{rx\+Pin,  }\item[{int8\+\_\+t}]{tx\+Pin }\end{DoxyParamCaption})}
+
+
+
+Construct a new Software Lin object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rx\+Pin} & The designated GPIO pin number of Rx pin \\
+\hline
+{\em tx\+Pin} & The designated GPIO pin number of Tx pin \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_software_lin_a9ae37435fc437fd9a3bf639441a3a042}\label{class_software_lin_a9ae37435fc437fd9a3bf639441a3a042} 
+\index{SoftwareLin@{SoftwareLin}!checkBreak@{checkBreak}}
+\index{checkBreak@{checkBreak}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{checkBreak()}{checkBreak()}}
+{\footnotesize\ttfamily bool IRAM\+\_\+\+ATTR Software\+Lin\+::check\+Break (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check whether there is Break Field sent on the bus. 
+
+\begin{DoxyReturn}{Returns}
+Whether the Break Field has been detected 
+\end{DoxyReturn}
+\Hypertarget{class_software_lin_ae02bdc24f7e59218e38ff7f8f50a9b9c}\label{class_software_lin_ae02bdc24f7e59218e38ff7f8f50a9b9c} 
+\index{SoftwareLin@{SoftwareLin}!endFrame@{endFrame}}
+\index{endFrame@{endFrame}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{endFrame()}{endFrame()}}
+{\footnotesize\ttfamily void Software\+Lin\+::end\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notify \doxylink{class_software_lin}{Software\+Lin} the LIN frame has ended. This is for \doxylink{class_software_lin}{Software\+Lin} to reset the internal state registers and prepare for next frame. 
+
+\Hypertarget{class_software_lin_aae2e970343acd45bfc879e0b201784c2}\label{class_software_lin_aae2e970343acd45bfc879e0b201784c2} 
+\index{SoftwareLin@{SoftwareLin}!read@{read}}
+\index{read@{read}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily int Software\+Lin\+::read (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Read bytes to buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The buffer for the data read \\
+\hline
+{\em size} & The number of bytes to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(int) The number of that has been successfully read 
+\end{DoxyReturn}
+\Hypertarget{class_software_lin_a7152ba7053f2eff863edd956f681ccbe}\label{class_software_lin_a7152ba7053f2eff863edd956f681ccbe} 
+\index{SoftwareLin@{SoftwareLin}!sendBreak@{sendBreak}}
+\index{sendBreak@{sendBreak}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{sendBreak()}{sendBreak()}}
+{\footnotesize\ttfamily void IRAM\+\_\+\+ATTR Software\+Lin\+::send\+Break (\begin{DoxyParamCaption}\item[{int}]{break\+Bits = {\ttfamily 13},  }\item[{int}]{delimiter\+Bits = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Send Break Field and Break Delimiter to the bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em break\+Bits} & Number of dominant bits in the break field \\
+\hline
+{\em delimiter\+Bits} & Number of recessive bits in the break delimiter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_software_lin_a4daca8aebec55d09c3a682745c65724b}\label{class_software_lin_a4daca8aebec55d09c3a682745c65724b} 
+\index{SoftwareLin@{SoftwareLin}!setAutoBaud@{setAutoBaud}}
+\index{setAutoBaud@{setAutoBaud}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{setAutoBaud()}{setAutoBaud()}}
+{\footnotesize\ttfamily uint32\+\_\+t IRAM\+\_\+\+ATTR Software\+Lin\+::set\+Auto\+Baud (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{common\+Baud\mbox{[}$\,$\mbox{]},  }\item[{int}]{common\+Baud\+Size }\end{DoxyParamCaption})}
+
+
+
+\doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} is used for automatically detect and set baud rate after the break field has been detected. When \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} is called, it\textquotesingle{}s assumed that the Rx pin is receiving a SYNC byte (0x55). \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} will detect the baud rate with SYNC byte and set the baud rate to the closest one in common\+Baud\mbox{[}\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em common\+Baud} & common\+Baud The array of common baud rates. When baud rate is detected, \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} will set the baud rate to the closest one in command\+Baud\mbox{[}\mbox{]} \\
+\hline
+{\em common\+Baud\+Size} & common\+Baud\+Size The size of common\+Baud\mbox{[}\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(uint32\+\_\+t) The baud rate set by \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()}. Return 0 if \doxylink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{set\+Auto\+Baud()} failed, and the baud rate will not be changed. 
+\end{DoxyReturn}
+\Hypertarget{class_software_lin_a2378ed8db5e1c601c99ff0d411502aaf}\label{class_software_lin_a2378ed8db5e1c601c99ff0d411502aaf} 
+\index{SoftwareLin@{SoftwareLin}!write@{write}}
+\index{write@{write}!SoftwareLin@{SoftwareLin}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily size\+\_\+t Software\+Lin\+::write (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Write bytes to the bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The buffer for the data write \\
+\hline
+{\em size} & The number of bytes to write \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(size\+\_\+t) The number of that has been successfully write 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/brad/\+Git\+Hub/\+ESP32-\/\+Software\+LIN/src/Software\+Lin.\+h\item 
+/\+Users/brad/\+Git\+Hub/\+ESP32-\/\+Software\+LIN/src/Software\+Lin.\+cpp\end{DoxyCompactItemize}

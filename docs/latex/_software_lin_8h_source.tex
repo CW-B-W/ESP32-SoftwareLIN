@@ -1,0 +1,53 @@
+\doxysection{Software\+Lin.\+h}
+\hypertarget{_software_lin_8h_source}{}\label{_software_lin_8h_source}\index{/Users/brad/GitHub/ESP32-\/SoftwareLIN/src/SoftwareLin.h@{/Users/brad/GitHub/ESP32-\/SoftwareLIN/src/SoftwareLin.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{SoftwareLin.h\ -\/\ Implementation\ of\ the\ software\ LIN\ bus\ emulation\ for\ ESP32.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{Copyright\ (c)\ 2023\ CW-\/B-\/W\ All\ rights\ reserved.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{}}
+\DoxyCodeLine{00005\ \textcolor{comment}{This\ library\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{modify\ it\ under\ the\ terms\ of\ the\ GNU\ Lesser\ General\ Public}}
+\DoxyCodeLine{00007\ \textcolor{comment}{License\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either}}
+\DoxyCodeLine{00008\ \textcolor{comment}{version\ 2.1\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{}}
+\DoxyCodeLine{00010\ \textcolor{comment}{This\ library\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU}}
+\DoxyCodeLine{00013\ \textcolor{comment}{Lesser\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{}}
+\DoxyCodeLine{00015\ \textcolor{comment}{You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ Lesser\ General\ Public}}
+\DoxyCodeLine{00016\ \textcolor{comment}{License\ along\ with\ this\ library;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{Foundation,\ Inc.,\ 51\ Franklin\ St,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#ifndef\ \_\_SoftwareLin\_h}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ \_\_SoftwareLin\_h}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}espsoftwareserial/src/SoftwareSerial.h"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_software_lin}{SoftwareLin}}\ :\ \textcolor{keyword}{public}\ EspSoftwareSerial::UART}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_software_lin}{SoftwareLin}}(int8\_t\ rxPin,\ int8\_t\ txPin);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_software_lin_a7152ba7053f2eff863edd956f681ccbe}{sendBreak}}(\textcolor{keywordtype}{int}\ breakBits\ =\ 13,\ \textcolor{keywordtype}{int}\ delimiterBits\ =\ 1);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_software_lin_a9ae37435fc437fd9a3bf639441a3a042}{checkBreak}}();}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00069\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_software_lin_a4daca8aebec55d09c3a682745c65724b}{setAutoBaud}}(\textcolor{keyword}{const}\ uint32\_t\ commonBaud[],\ \textcolor{keywordtype}{int}\ commonBaudSize);}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_software_lin_ae02bdc24f7e59218e38ff7f8f50a9b9c}{endFrame}}();}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_software_lin_aae2e970343acd45bfc879e0b201784c2}{read}}(uint8\_t*\ buffer,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_software_lin_a2378ed8db5e1c601c99ff0d411502aaf}{write}}(\textcolor{keyword}{const}\ uint8\_t*\ buffer,\ \textcolor{keywordtype}{size\_t}\ size)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_software_lin_ad2ac6554a377df667b5c07ccd2103ce3}{m\_inFrame}};}
+\DoxyCodeLine{00109\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
