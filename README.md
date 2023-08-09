@@ -86,3 +86,6 @@ if (swLin.checkBreak()) {
     swLin.endFrame();
 }
 ```
+
+# Testing
+Refer to [CW-B-W/ESP32-openLIN#testing](https://github.com/CW-B-W/ESP32-openLIN/tree/master#testing)
