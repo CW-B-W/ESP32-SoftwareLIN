@@ -19,9 +19,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "SoftwareLin.h"
+#include "freertos/semphr.h"
+
+static SemaphoreHandle_t isr_sem = NULL;
+static StaticSemaphore_t isr_sem_buf;
+
+static void IRAM_ATTR wakeUpCheckBreak()
+{
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;             // Don't need to YieldFromISR
+    xSemaphoreGiveFromISR(isr_sem, &xHigherPriorityTaskWoken); // Wake up SoftwareLin::checkBreak()
+}
 
 SoftwareLin::SoftwareLin(int8_t rxPin, int8_t txPin) : BasicUART<GpioCapabilities>(rxPin, txPin, false)
 {
+    isr_sem = xSemaphoreCreateBinaryStatic(&isr_sem_buf);
+    UART::onReceive(wakeUpCheckBreak);
+
     m_inFrame = false;
 }
 
@@ -40,6 +53,10 @@ bool IRAM_ATTR SoftwareLin::checkBreak()
     assert(false == m_inFrame);
 
     bool breakDetected = false;
+    if (!m_isrBuffer->available()) {
+        while (pdPASS != xSemaphoreTake(isr_sem, portMAX_DELAY))
+            ;
+    }
     while (m_isrBuffer->available()) {
         // This section is copied from `void UARTBase::rxBits(const uint32_t isrTick)`
         uint32_t isrTick = m_isrBuffer->pop();
@@ -90,6 +107,10 @@ uint32_t IRAM_ATTR SoftwareLin::setAutoBaud(const uint32_t commonBaud[], int com
         // 3 rising/falling edges of the SYNC byte left in the buffer.
         // Popping the rest rising/falling edges of the SYNC bytes.
 
+        if (!m_isrBuffer->available()) {
+            while (pdPASS != xSemaphoreTake(isr_sem, portMAX_DELAY))
+                ;
+        }
         while (!m_isrBuffer->available()) {
             ; // wait until can pop
         }
