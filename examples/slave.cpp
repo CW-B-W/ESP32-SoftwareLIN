@@ -35,6 +35,8 @@ void loop()
 
 
         if (swLin.checkBreak()) {
+            // sw_lin.checkBreak() blocks until UART ISR gives the semaphore.
+
 #ifdef LIN_AUTOBAUD
             const uint32_t commonBaud[] = {110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200};
             uint32_t autobaud = swLin.setAutoBaud(commonBaud, sizeof(commonBaud)/sizeof(commonBaud[0]));
