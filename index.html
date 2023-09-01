@@ -139,6 +139,7 @@ For LIN slave</h2>
 <div class="line">SoftwareLin swLin(RX_PIN, TX_PIN);</div>
 <div class="line">#define LIN_BAUD_MAX (20000)</div>
 <div class="line">swLin.begin(LIN_BAUD_MAX);</div>
+<div class="line">// swLin.checkBreak() blocks until UART ISR is triggered</div>
 <div class="line">if (swLin.checkBreak()) {</div>
 <div class="line">    const uint32_t commonBaud[3] = {9600, 14400, 19200};</div>
 <div class="line">    uint32_t autobaud = swLin.setAutoBaud(commonBaud, 3);</div>

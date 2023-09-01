@@ -63,6 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classSoftwareLin-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -81,11 +82,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5d03c78eddf7c2653ef8cde63eaf9a7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a5d03c78eddf7c2653ef8cde63eaf9a7e">SoftwareLin</a> (int8_t rxPin, int8_t txPin)</td></tr>
 <tr class="memdesc:a5d03c78eddf7c2653ef8cde63eaf9a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Software Lin object.  <a href="classSoftwareLin.html#a5d03c78eddf7c2653ef8cde63eaf9a7e">More...</a><br /></td></tr>
 <tr class="separator:a5d03c78eddf7c2653ef8cde63eaf9a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00870bd1b3b33d6c1c9e09aa054e369"><td class="memItemLeft" align="right" valign="top"><a id="ac00870bd1b3b33d6c1c9e09aa054e369"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#ac00870bd1b3b33d6c1c9e09aa054e369">~SoftwareLin</a> ()</td></tr>
+<tr class="memdesc:ac00870bd1b3b33d6c1c9e09aa054e369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Software Lin object. <br /></td></tr>
+<tr class="separator:ac00870bd1b3b33d6c1c9e09aa054e369"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7152ba7053f2eff863edd956f681ccbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a7152ba7053f2eff863edd956f681ccbe">sendBreak</a> (int breakBits=13, int delimiterBits=1)</td></tr>
 <tr class="memdesc:a7152ba7053f2eff863edd956f681ccbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Break Field and Break Delimiter to the bus.  <a href="classSoftwareLin.html#a7152ba7053f2eff863edd956f681ccbe">More...</a><br /></td></tr>
 <tr class="separator:a7152ba7053f2eff863edd956f681ccbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ae37435fc437fd9a3bf639441a3a042"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042">checkBreak</a> ()</td></tr>
-<tr class="memdesc:a9ae37435fc437fd9a3bf639441a3a042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether there is Break Field sent on the bus.  <a href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042">More...</a><br /></td></tr>
+<tr class="memdesc:a9ae37435fc437fd9a3bf639441a3a042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is triggered. After the UART ISR is triggered, this function will check whether break field has been detected. If break field has been detected, this function will return true, otherwise this function will return false.  <a href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042">More...</a><br /></td></tr>
 <tr class="separator:a9ae37435fc437fd9a3bf639441a3a042"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4daca8aebec55d09c3a682745c65724b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b">setAutoBaud</a> (const uint32_t commonBaud[], int commonBaudSize)</td></tr>
 <tr class="memdesc:a4daca8aebec55d09c3a682745c65724b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b" title="setAutoBaud() is used for automatically detect and set baud rate after the break field has been detec...">setAutoBaud()</a> is used for automatically detect and set baud rate after the break field has been detected. When <a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b" title="setAutoBaud() is used for automatically detect and set baud rate after the break field has been detec...">setAutoBaud()</a> is called, it's assumed that the Rx pin is receiving a SYNC byte (0x55). <a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b" title="setAutoBaud() is used for automatically detect and set baud rate after the break field has been detec...">setAutoBaud()</a> will detect the baud rate with SYNC byte and set the baud rate to the closest one in commonBaud[].  <a href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b">More...</a><br /></td></tr>
@@ -101,12 +106,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a2378ed8db5e1c601c99ff0d411502aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write bytes to the bus.  <a href="classSoftwareLin.html#a2378ed8db5e1c601c99ff0d411502aaf">More...</a><br /></td></tr>
 <tr class="separator:a2378ed8db5e1c601c99ff0d411502aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a11204937b2aa832df5ef774f3e467202"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a11204937b2aa832df5ef774f3e467202">wakeCheckBreak</a> (<a class="el" href="classSoftwareLin.html">SoftwareLin</a> *pThis)</td></tr>
+<tr class="memdesc:a11204937b2aa832df5ef774f3e467202"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function wake <a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042" title="Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is trigge...">checkBreak()</a> from blocking. When the UART ISR is triggered, m_isrSem is given so that <a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042" title="Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is trigge...">checkBreak()</a> can take it. Although this is a static function, it is actually std::bind to this. Therefore, this function can be regarded as a non-static member function of an instance.  <a href="classSoftwareLin.html#a11204937b2aa832df5ef774f3e467202">More...</a><br /></td></tr>
+<tr class="separator:a11204937b2aa832df5ef774f3e467202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ad2ac6554a377df667b5c07ccd2103ce3"><td class="memItemLeft" align="right" valign="top"><a id="ad2ac6554a377df667b5c07ccd2103ce3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#ad2ac6554a377df667b5c07ccd2103ce3">m_inFrame</a></td></tr>
 <tr class="memdesc:ad2ac6554a377df667b5c07ccd2103ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate whether <a class="el" href="classSoftwareLin.html">SoftwareLin</a> is still processing a frame. Initially, m_inFrame is false. After <a class="el" href="classSoftwareLin.html#a7152ba7053f2eff863edd956f681ccbe" title="Send Break Field and Break Delimiter to the bus.">sendBreak()</a> is executed or detectBreak() is true, m_inFrame is set to true. Only when m_inFrame is true, we can execute <a class="el" href="classSoftwareLin.html#aae2e970343acd45bfc879e0b201784c2" title="Read bytes to buffer.">read()</a>/write(), otherwise the assertion should failed. When the LIN frame has ended, <a class="el" href="classSoftwareLin.html#ae02bdc24f7e59218e38ff7f8f50a9b9c" title="Notify SoftwareLin the LIN frame has ended. This is for SoftwareLin to reset the internal state regis...">endFrame()</a> should be executed to reset m_inFrame to false, so that the next LIN frame can be processed. <br /></td></tr>
 <tr class="separator:ad2ac6554a377df667b5c07ccd2103ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50f849f013f760334c5815c01661fd8e"><td class="memItemLeft" align="right" valign="top"><a id="a50f849f013f760334c5815c01661fd8e"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a50f849f013f760334c5815c01661fd8e">m_isrSem</a></td></tr>
+<tr class="memdesc:a50f849f013f760334c5815c01661fd8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The semaphore for notifying <a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042" title="Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is trigge...">checkBreak()</a> that the ISR has been triggered. <br /></td></tr>
+<tr class="separator:a50f849f013f760334c5815c01661fd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608b13e1744bed78adb195f26d1c5439"><td class="memItemLeft" align="right" valign="top"><a id="a608b13e1744bed78adb195f26d1c5439"></a>
+StaticSemaphore_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSoftwareLin.html#a608b13e1744bed78adb195f26d1c5439">m_isrSemBuf</a></td></tr>
+<tr class="memdesc:a608b13e1744bed78adb195f26d1c5439"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer for static allocation of m_isrSem. <br /></td></tr>
+<tr class="separator:a608b13e1744bed78adb195f26d1c5439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5d03c78eddf7c2653ef8cde63eaf9a7e"></a>
@@ -162,7 +181,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
 </div><div class="memdoc">
 
-<p>Check whether there is Break Field sent on the bus. </p>
+<p>Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is triggered. After the UART ISR is triggered, this function will check whether break field has been detected. If break field has been detected, this function will return true, otherwise this function will return false. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether the Break Field has been detected </dd></dl>
 
 </div>
@@ -277,6 +296,40 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>(uint32_t) The baud rate set by <a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b" title="setAutoBaud() is used for automatically detect and set baud rate after the break field has been detec...">setAutoBaud()</a>. Return 0 if <a class="el" href="classSoftwareLin.html#a4daca8aebec55d09c3a682745c65724b" title="setAutoBaud() is used for automatically detect and set baud rate after the break field has been detec...">setAutoBaud()</a> failed, and the baud rate will not be changed. </dd></dl>
+
+</div>
+</div>
+<a id="a11204937b2aa832df5ef774f3e467202"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11204937b2aa832df5ef774f3e467202">&#9670;&nbsp;</a></span>wakeCheckBreak()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IRAM_ATTR SoftwareLin::wakeCheckBreak </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSoftwareLin.html">SoftwareLin</a> *&#160;</td>
+          <td class="paramname"><em>pThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function wake <a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042" title="Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is trigge...">checkBreak()</a> from blocking. When the UART ISR is triggered, m_isrSem is given so that <a class="el" href="classSoftwareLin.html#a9ae37435fc437fd9a3bf639441a3a042" title="Check whether there is Break Field sent on the bus. This function blocks until the UART ISR is trigge...">checkBreak()</a> can take it. Although this is a static function, it is actually std::bind to this. Therefore, this function can be regarded as a non-static member function of an instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pThis</td><td>The pointer points to the instance of <a class="el" href="classSoftwareLin.html">SoftwareLin</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
