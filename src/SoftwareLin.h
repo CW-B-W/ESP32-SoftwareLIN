@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __SoftwareLin_h
 
 #include "espsoftwareserial/src/SoftwareSerial.h"
+#include "freertos/semphr.h"
 
 class SoftwareLin : public EspSoftwareSerial::UART
 {
@@ -33,6 +34,12 @@ public:
      * @param txPin The designated GPIO pin number of Tx pin
      */
     SoftwareLin(int8_t rxPin, int8_t txPin);
+
+    /**
+     * @brief Destroy the Software Lin object
+     * 
+     */
+    ~SoftwareLin();
 
     /**
      * @brief Send Break Field and Break Delimiter to the bus
@@ -111,6 +118,25 @@ protected:
      * reset m_inFrame to false, so that the next LIN frame can be processed.
      */
     bool m_inFrame;
+
+    /**
+     * @brief The semaphore for notifying checkBreak() that the ISR has been triggered.
+     */
+    SemaphoreHandle_t m_isrSem;
+    /**
+     * @brief The buffer for static allocation of m_isrSem.
+     */
+    StaticSemaphore_t m_isrSemBuf;
+
+    /**
+     * @brief This function wake checkBreak() from blocking.
+     * When the UART ISR is triggered, m_isrSem is given so that checkBreak() can take it.
+     * Although this is a static function, it is actually std::bind to this.
+     * Therefore, this function can be regarded as a non-static member function of an instance.
+     * 
+     * @param pThis The pointer points to the instance of SoftwareLin.
+     */
+    static void wakeCheckBreak(SoftwareLin* pThis);
 };
 
 #endif

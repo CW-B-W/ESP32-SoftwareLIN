@@ -20,22 +20,28 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "SoftwareLin.h"
 #include "freertos/semphr.h"
+#include <functional>
 
-static SemaphoreHandle_t isr_sem = NULL;
-static StaticSemaphore_t isr_sem_buf;
-
-static void IRAM_ATTR wakeUpCheckBreak()
+void IRAM_ATTR SoftwareLin::wakeCheckBreak(SoftwareLin* pThis)
 {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;             // Don't need to YieldFromISR
-    xSemaphoreGiveFromISR(isr_sem, &xHigherPriorityTaskWoken); // Wake up SoftwareLin::checkBreak()
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;                    // Don't need to YieldFromISR
+    xSemaphoreGiveFromISR(pThis->m_isrSem, &xHigherPriorityTaskWoken); // Wake up SoftwareLin::checkBreak()
 }
 
 SoftwareLin::SoftwareLin(int8_t rxPin, int8_t txPin) : BasicUART<GpioCapabilities>(rxPin, txPin, false)
 {
-    isr_sem = xSemaphoreCreateBinaryStatic(&isr_sem_buf);
-    UART::onReceive(wakeUpCheckBreak);
+    m_isrSem = xSemaphoreCreateBinaryStatic(&m_isrSemBuf);
+    std::function<void()> f = std::bind(&SoftwareLin::wakeCheckBreak, this);
+    UART::onReceive(f);
 
     m_inFrame = false;
+}
+
+SoftwareLin::~SoftwareLin()
+{
+    Delegate<void(), void*> dummyHandler;
+    UART::onReceive(dummyHandler);
+    vSemaphoreDelete(m_isrSem);
 }
 
 void IRAM_ATTR SoftwareLin::sendBreak(int breakBits, int delimiterBits)
@@ -54,7 +60,7 @@ bool IRAM_ATTR SoftwareLin::checkBreak()
 
     bool breakDetected = false;
     if (!m_isrBuffer->available()) {
-        while (pdPASS != xSemaphoreTake(isr_sem, portMAX_DELAY))
+        while (pdPASS != xSemaphoreTake(m_isrSem, portMAX_DELAY))
             ;
     }
     while (m_isrBuffer->available()) {
@@ -108,7 +114,7 @@ uint32_t IRAM_ATTR SoftwareLin::setAutoBaud(const uint32_t commonBaud[], int com
         // Popping the rest rising/falling edges of the SYNC bytes.
 
         if (!m_isrBuffer->available()) {
-            while (pdPASS != xSemaphoreTake(isr_sem, portMAX_DELAY))
+            while (pdPASS != xSemaphoreTake(m_isrSem, portMAX_DELAY))
                 ;
         }
         while (!m_isrBuffer->available()) {
