@@ -70,6 +70,7 @@ Only three functions need to be used: `checkBreak()`, `setAutoBaud()` and `endFr
 SoftwareLin swLin(RX_PIN, TX_PIN);
 #define LIN_BAUD_MAX (20000)
 swLin.begin(LIN_BAUD_MAX);
+// swLin.checkBreak() blocks until UART ISR is triggered
 if (swLin.checkBreak()) {
     const uint32_t commonBaud[3] = {9600, 14400, 19200};
     uint32_t autobaud = swLin.setAutoBaud(commonBaud, 3);

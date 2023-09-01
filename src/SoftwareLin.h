@@ -43,7 +43,12 @@ public:
     void sendBreak(int breakBits = 13, int delimiterBits = 1);
 
     /**
-     * @brief Check whether there is Break Field sent on the bus
+     * @brief Check whether there is Break Field sent on the bus.
+     * This function blocks until the UART ISR is triggered.
+     * After the UART ISR is triggered, this function will check
+     * whether break field has been detected. If break field has
+     * been detected, this function will return true, otherwise
+     * this function will return false.
      * 
      * @return Whether the Break Field has been detected
      */
